@@ -8,6 +8,7 @@ Estes padrões valem para todos os repositórios da organização.
 - Trabalho de cliente: `cliente-projeto` (ex.: `acme-portal`).
 - Projetos próprios: `interno-nome`.
 - Repositórios novos nascem privados e a partir do `template-projeto`.
+- Só os Owners da organização criam repositórios, sempre com `scripts/novo-repo.sh` deste repositório. O script cria o repositório a partir do template e aplica as configurações de merge e as labels, que o GitHub não copia do template.
 
 ## Fluxo de trabalho
 
@@ -17,13 +18,13 @@ Estes padrões valem para todos os repositórios da organização.
    - `fix/descricao-curta` para correções
    - `chore/descricao-curta` para manutenção
 3. A branch entra por pull request, com revisão de pelo menos um outro sócio.
-4. O merge é sempre por squash, e a branch é apagada depois.
+4. O merge padrão é por merge commit, que preserva os commits da branch. O squash fica disponível para quando os commits da branch não merecem ir para a `main`. A branch é apagada depois do merge.
 
 No plano gratuito o GitHub não bloqueia push direto na `main` de repositórios privados. A regra acima é um combinado entre nós.
 
 ## Commits
 
-Seguimos o padrão [Conventional Commits](https://www.conventionalcommits.org/pt-br/). Como o merge é por squash, o título do pull request vira o commit na `main`, então é ele que precisa seguir o padrão:
+Seguimos o padrão [Conventional Commits](https://www.conventionalcommits.org/pt-br/). Como o merge preserva os commits da branch, o padrão vale para cada commit e também para o título do pull request, que vira o título do commit de merge na `main`:
 
 ```
 tipo(escopo opcional): descrição no imperativo, em minúsculas
@@ -36,6 +37,10 @@ Exemplos:
 - `feat: cadastro de clientes`
 - `fix(login): corrige redirecionamento após expirar a sessão`
 - `docs: atualiza instruções de deploy`
+
+Cada commit deve ser uma mudança coesa, que faça sentido sozinha. Antes de abrir o PR, arrume commits como "wip" e "ajuste" com `git rebase -i`, ou faça o merge por squash.
+
+O workflow `padrao-de-commits.yml` do `template-projeto` confere o título do PR e a mensagem de cada commit. Para ler a `main` uma entrega por linha, use `git log --first-parent`.
 
 ## Revisão de código
 

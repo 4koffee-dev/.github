@@ -13,7 +13,7 @@
 
 ## Checklist
 
-- [ ] O título do PR segue Conventional Commits (ex.: `feat: cadastro de clientes`)
+- [ ] O título do PR e os commits seguem Conventional Commits (ex.: `feat: cadastro de clientes`)
 - [ ] Testei localmente
 - [ ] Atualizei a documentação, se necessário
 - [ ] Não há segredos, senhas ou dados de cliente no código
