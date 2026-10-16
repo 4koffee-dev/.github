@@ -42,6 +42,15 @@ Cada commit deve ser uma mudança coesa, que faça sentido sozinha. Antes de abr
 
 O workflow `padrao-de-commits.yml` do `template-projeto` confere o título do PR e a mensagem de cada commit. Para ler a `main` uma entrega por linha, use `git log --first-parent`.
 
+## Quadro de tarefas
+
+Cada projeto tem um quadro na organização, criado pelo `scripts/novo-repo.sh`, com as colunas A fazer, Pronta para pegar, Em andamento, Em revisão, Em homologação e Concluída.
+
+1. Cada um pega, ninguém distribui: puxe uma tarefa de **Pronta para pegar** e coloque-se como responsável.
+2. Toda tarefa tem a seção **Depende de**, com os links `#número` das tarefas que precisam terminar antes. A automação do quadro lê essa seção para liberar as tarefas seguintes.
+3. O pull request fecha a tarefa com `Closes #número`.
+4. Tarefa que depende de algo de fora recebe a etiqueta `bloqueado`; quem destrava tira a etiqueta.
+
 ## Revisão de código
 
 - Quem abre o PR explica o que mudou e como testar.

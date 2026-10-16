@@ -10,3 +10,7 @@ labels: chore
 ## Pronto quando
 
 - [ ]
+
+## Depende de
+
+<!-- Links das tarefas que precisam terminar antes, ex.: #12, #15. Escreva "Nenhuma." se não houver. -->

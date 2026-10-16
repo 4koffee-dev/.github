@@ -23,16 +23,41 @@ Só os Owners da organização criam repositórios. É preciso ter o [gh CLI](ht
 ./scripts/novo-repo.sh nome-do-repositorio "Descrição curta"
 ```
 
+Opções, no fim do comando:
+
+| Opção | Efeito |
+|---|---|
+| (nenhuma) | Cria um quadro novo, "nome-do-repositorio — tarefas" |
+| `--quadro N` | Liga o repositório ao quadro N, que já existe (por exemplo, o repositório de operação de um projeto, que divide o quadro com o de código) |
+| `--sem-quadro` | Não liga o repositório a nenhum quadro |
+
+A configuração da automação do quadro é combinada entre os sócios. Sem ela, o repositório é criado do mesmo jeito, e o script avisa o que falta.
+
 O script:
 
 1. cria o repositório privado a partir do [template-projeto](https://github.com/4koffee-dev/template-projeto);
 2. configura o merge: merge commit como padrão, squash disponível, rebase desligado e exclusão da branch após o merge;
 3. liga os alertas do Dependabot;
-4. aplica as labels padrão da 4koffee.
+4. aplica as labels padrão da 4koffee;
+5. cria o quadro de tarefas na organização (ou usa um existente), com as colunas padrão, e o liga ao repositório;
+6. cadastra no repositório o número do quadro e a configuração da automação.
+
+Para os passos 5 e 6, o `gh` precisa da permissão de projetos (`gh auth refresh -s project`).
 
 O nome segue a regra do CONTRIBUTING: minúsculas com hífen, `cliente-projeto` para trabalho de cliente e `interno-nome` para projetos próprios.
 
 Depois de criar, siga o checklist "Ao iniciar um projeto" do README do repositório novo.
+
+## Quadro de tarefas e automação de dependências
+
+Todo repositório criado pelo script nasce com o workflow `quadro-dependencias.yml`, que vem do `template-projeto`. Ele lê a seção **Depende de** de cada tarefa (links `#número`) e:
+
+- quando uma tarefa é **fechada**, move-a para **Concluída** e passa para **Pronta para pegar** as que dependiam dela e não têm mais dependência aberta, com um comentário;
+- quando uma tarefa é **reaberta**, desfaz;
+- não mexe em tarefas com a etiqueta `bloqueado`.
+
+Pode ser rodado à mão, em modo de simulação: Actions → "Quadro de tarefas — dependências" → Run workflow.
+
 
 ## Mudar um padrão
 
